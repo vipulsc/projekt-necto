@@ -42,8 +42,8 @@ const UploadForm = () => {
         },
       });
     },
-    onUploadBegin: ({ file }) => {
-      console.log("upload has begun for", file);
+    onUploadBegin: (fileName: string) => {
+      console.log("upload has begun for", fileName);
       toast("Uploading file...", {
         description: "Hang tight, this may take a while...",
       });
