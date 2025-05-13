@@ -1,8 +1,16 @@
 import BgGradient from "@/components/styling-component/bgGradient";
 import UploadForm from "@/components/upload/upload-form";
 import UploadHeader from "@/components/upload/upload-header";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
-const uploadPage = () => {
+const uploadPage = async () => {
+  const user = await currentUser();
+
+  if (!user) {
+    redirect("/sign-in");
+  }
+
   return (
     <section className="min-h-screen">
       <BgGradient />
