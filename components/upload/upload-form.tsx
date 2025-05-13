@@ -4,6 +4,7 @@ import { useUploadThing } from "@/utils/uploadThing";
 import UploadFormInput from "./uploadFormInput";
 import { z } from "zod";
 import { toast } from "sonner";
+import { generatePdfSummary } from "@/actions/upload-actions";
 
 const schema = z.object({
   file: z
@@ -85,8 +86,11 @@ const UploadForm = () => {
       return;
     }
 
-    // TODO:
     // - Parse
+    const summary = await generatePdfSummary(res);
+    console.log({ summary });
+
+    // TODO:
     // - Summarize
     // - Save
     // - Redirect to [id] summary page
