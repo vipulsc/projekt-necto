@@ -4,7 +4,7 @@ import { useUploadThing } from "@/utils/uploadThing";
 import UploadFormInput from "./uploadFormInput";
 import { z } from "zod";
 import { toast } from "sonner";
-import { generatePdfSummary } from "@/actions/upload-actions";
+import { generatePdfSummary, storeSummary } from "@/actions/upload-actions";
 import { useRef, useState } from "react";
 
 const schema = z.object({
@@ -104,16 +104,27 @@ const UploadForm = () => {
 
         const { data = null, message = null } = result || {};
         if (data) {
+          let storeResult;
           toast("Summary generated successfully", {
             description: "Saving PDF summary...",
             duration: 5000,
           });
 
-          formRef.current?.reset();
           setIsLoading(false);
-          if(data.summary)
-          {
-            //save the summary to the database;
+          if (data.summary) {
+            storeResult = await storeSummary({
+              pdfUrl: res[0].serverData.file.ufsUrl,
+              summary: data.summary,
+              title: data.title,
+              fileName: file.name,
+            });
+            if (storeResult) {
+              toast("Summary saved 💫", {
+                description: "Summary saved successfully",
+                duration: 5000,
+              });
+            }
+            formRef.current?.reset();
           }
         } else {
           toast("Error generating summary", {
