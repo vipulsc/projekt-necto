@@ -6,6 +6,7 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { generatePdfSummary, storeSummary } from "@/actions/upload-actions";
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   file: z
@@ -23,6 +24,8 @@ const schema = z.object({
 const UploadForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
+
   const { startUpload } = useUploadThing("pdfUploader", {
     onClientUploadComplete: () => {
       console.log("Upload complete");
@@ -110,7 +113,6 @@ const UploadForm = () => {
             duration: 5000,
           });
 
-          setIsLoading(false);
           if (data.summary) {
             storeResult = await storeSummary({
               pdfUrl: res[0].serverData.file.ufsUrl,
@@ -123,17 +125,19 @@ const UploadForm = () => {
                 description: "Summary saved successfully",
                 duration: 5000,
               });
+              formRef.current?.reset();
+              //TODO: Redirect to the summary page
+              router.push(`/summaries/${storeResult.id}`);
             }
+          } else {
+            toast("Error generating summary", {
+              description: message || "Something went wrong",
+              duration: 5000,
+            });
             formRef.current?.reset();
           }
-        } else {
-          toast("Error generating summary", {
-            description: message || "Something went wrong",
-            duration: 5000,
-          });
-          formRef.current?.reset();
-          setIsLoading(false);
         }
+        setIsLoading(false);
       } catch (err) {
         console.log("Error", err);
         toast("Error processing file", {

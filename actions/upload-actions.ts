@@ -6,6 +6,7 @@ import { fetchAndExtractPdfText } from "@/lib/langChain";
 import { generateSummaryFromOpenAI } from "@/lib/openAi";
 import { formatFileNameAsTitle } from "@/utils/formatFileName";
 import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 export async function generatePdfSummary(
   uploadResponse:
@@ -111,7 +112,12 @@ async function savePdfSummary({
 }: SavePdfSummaryProps) {
   try {
     const sql = await getDbConnection();
-    await sql`INSERT INTO pdf_summaries(user_id, original_file_url, summary_text, title, file_name) VALUES(${userId}, ${pdfUrl}, ${summary}, ${title}, ${fileName})`;
+    const result = await sql`
+      INSERT INTO pdf_summaries(user_id, original_file_url, summary_text, title, file_name) 
+      VALUES(${userId}, ${pdfUrl}, ${summary}, ${title}, ${fileName})
+      RETURNING id
+    `;
+    return result[0];
   } catch (err) {
     return {
       success: false,
@@ -143,15 +149,21 @@ export async function storeSummary({
       title,
       fileName,
     });
-    if (!savePdfSummaryResponse) {
+
+    if (!savePdfSummaryResponse || "success" in savePdfSummaryResponse) {
       return {
         success: false,
-        message: "Error Saving Summary,please try again...",
+        message: "Error Saving Summary, please try again...",
       };
     }
+
+    //revalidate the cache
+    revalidatePath(`summaries/${savePdfSummaryResponse.id}`);
+
     return {
       success: true,
       message: "Summary saved successfully",
+      id: savePdfSummaryResponse.id,
     };
   } catch (err) {
     return {
