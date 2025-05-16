@@ -2,7 +2,7 @@ import BgGradient from "@/components/styling-component/bgGradient";
 import EmptySummary from "@/components/summary/empty-summary";
 import SummmaryCard from "@/components/summary/summary-card";
 import { Button } from "@/components/ui/button";
-import { getSummaries, type Summary } from "@/lib/summary";
+import { getSummaries, Summary } from "@/lib/summary";
 import { currentUser } from "@clerk/nextjs/server";
 import { ArrowRight, Plus } from "lucide-react";
 import Link from "next/link";
