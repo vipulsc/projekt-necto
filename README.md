@@ -99,7 +99,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Website](https://necto.sbs)
 - [Documentation](https://docs.necto.sbs)
-- [Issue Tracker](https://github.com/yourusername/necto/issues)
+- [Issue Tracker](https://github.com/vipulsc/projekt-necto/issues)
 
 ## 🙏 Acknowledgments
 
