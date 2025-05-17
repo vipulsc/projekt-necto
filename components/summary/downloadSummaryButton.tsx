@@ -16,8 +16,9 @@ export default function DownloadSummaryButton({
 }) {
   const handleDownload = () => {
     const summaryContent = `# ${title}
-	Generated Summary
-	Generated on: ${new Date(created_at).toLocaleDateString()}
+
+Generated Summary
+Generated on: ${new Date(created_at).toLocaleDateString()}
 
 	${summary_text}
 
@@ -29,8 +30,8 @@ export default function DownloadSummaryButton({
     const a = document.createElement("a");
     a.href = url;
     a.download = `${title.replace(/\s+/g, "_")}.txt`;
+    document.body.appendChild(a);
     a.click();
-
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
