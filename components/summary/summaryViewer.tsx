@@ -101,28 +101,28 @@ export default function SummaryViewer({ summary }: { summary: string }) {
 
   return (
     <Card className="w-full max-w-3xl mx-auto shadow-xl border-0 bg-gradient-to-br from-rose-50/50 to-white">
-      <div className="px-8 pt-6">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-sm font-medium text-rose-600">
+      <div className="px-4 sm:px-8 pt-4 sm:pt-6">
+        <div className="flex items-center justify-between mb-2 sm:mb-3">
+          <span className="text-xs sm:text-sm font-medium text-rose-600">
             Reading Progress
           </span>
-          <span className="text-sm font-medium text-rose-600">
+          <span className="text-xs sm:text-sm font-medium text-rose-600">
             {currentSection + 1} of {sections.length}
           </span>
         </div>
-        <Progress value={progress} className="h-3" />
+        <Progress value={progress} className="h-2 sm:h-3" />
       </div>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b border-rose-100/50">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 sm:pb-4 border-b border-rose-100/50 px-4 sm:px-8">
         <Button
           variant="ghost"
           size="icon"
           onClick={handlePrevious}
           disabled={currentSection === 0}
-          className="hover:bg-rose-50 transition-all duration-200 rounded-full h-10 w-10 text-rose-600"
+          className="hover:bg-rose-50 transition-all duration-200 rounded-full h-8 w-8 sm:h-10 sm:w-10 text-rose-600"
         >
-          <ChevronLeft className="h-5 w-5 text-rose-50" />
+          <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 text-rose-50" />
         </Button>
-        <CardTitle className="text-xl font-bold text-center flex-1 px-4 text-rose-900">
+        <CardTitle className="text-lg sm:text-xl font-bold text-center flex-1 px-2 sm:px-4 text-rose-900 line-clamp-2">
           {sections[currentSection].title}
         </CardTitle>
         <Button
@@ -130,12 +130,12 @@ export default function SummaryViewer({ summary }: { summary: string }) {
           size="icon"
           onClick={handleNext}
           disabled={currentSection === sections.length - 1}
-          className="hover:bg-rose-50 transition-all duration-200 rounded-full h-10 w-10 text-rose-600"
+          className="hover:bg-rose-50 transition-all duration-200 rounded-full h-8 w-8 sm:h-10 sm:w-10 text-rose-600"
         >
-          <ChevronRight className="h-5 w-5 text-rose-50" />
+          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-rose-50" />
         </Button>
       </CardHeader>
-      <CardContent className="relative h-[400px] overflow-hidden">
+      <CardContent className="relative h-[300px] sm:h-[400px] overflow-hidden px-4 sm:px-8">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={currentSection}
@@ -150,9 +150,9 @@ export default function SummaryViewer({ summary }: { summary: string }) {
               scale: { duration: 0.2 },
               rotateY: { duration: 0.3 },
             }}
-            className="absolute inset-0 p-6 overflow-y-auto"
+            className="absolute inset-0 p-3 sm:p-6 overflow-y-auto"
           >
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2 sm:gap-3">
               {sections[currentSection].content.map((point, index) => (
                 <motion.div
                   key={index}
@@ -160,9 +160,9 @@ export default function SummaryViewer({ summary }: { summary: string }) {
                   variants={cardVariants}
                   initial="hidden"
                   animate="visible"
-                  className="text-gray-700 leading-relaxed bg-white/80 backdrop-blur-sm p-5 rounded-xl shadow-md hover:shadow-lg hover:bg-white transition-all duration-200 border border-rose-100 hover:border-rose-200 hover:scale-[1.02]"
+                  className="text-gray-700 leading-relaxed bg-white/80 backdrop-blur-sm p-3 sm:p-5 rounded-xl shadow-md hover:shadow-lg hover:bg-white transition-all duration-200 border border-rose-100 hover:border-rose-200 hover:scale-[1.02]"
                 >
-                  <p className="text-base leading-6">{point}</p>
+                  <p className="text-sm sm:text-base leading-6">{point}</p>
                 </motion.div>
               ))}
             </div>
