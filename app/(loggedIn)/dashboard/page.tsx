@@ -7,6 +7,29 @@ import { currentUser } from "@clerk/nextjs/server";
 import { ArrowRight, Plus } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
+
+const LoadingSummaryCard = () => (
+  <SummmaryCard
+    summary={{
+      id: "loading",
+      orignal_file_url: "",
+      title: "",
+      created_at: new Date().toISOString(),
+      summary_text: "",
+      status: "loading",
+    }}
+    isLoading={true}
+  />
+);
+
+const LoadingSummaryGrid = () => (
+  <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 sm:px-0">
+    {Array.from({ length: 3 }).map((_, i) => (
+      <LoadingSummaryCard key={i} />
+    ))}
+  </div>
+);
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -61,15 +84,17 @@ export default async function DashboardPage() {
               </div>
             </div>
           )}
-          {summaries.length === 0 ? (
-            <EmptySummary />
-          ) : (
-            <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 sm:px-0">
-              {summaries.map((summary: Summary) => (
-                <SummmaryCard key={summary.id} summary={summary} />
-              ))}
-            </div>
-          )}
+          <Suspense fallback={<LoadingSummaryGrid />}>
+            {summaries.length === 0 ? (
+              <EmptySummary />
+            ) : (
+              <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 sm:px-0">
+                {summaries.map((summary: Summary) => (
+                  <SummmaryCard key={summary.id} summary={summary} />
+                ))}
+              </div>
+            )}
+          </Suspense>
         </div>
       </div>
     </main>

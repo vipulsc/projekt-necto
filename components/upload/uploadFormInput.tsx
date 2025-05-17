@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import { Loader } from "../ui/loader";
 
 interface UploadFormInputProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -26,13 +26,25 @@ const UploadFormInput = forwardRef<HTMLFormElement, UploadFormInputProps>(
               name="file"
               accept="application/pdf"
               required
-              className={cn(isLoading && "opacity-50 cursor-not-allowed")}
+              className={cn(
+                "transition-opacity duration-200",
+                isLoading && "opacity-50 cursor-not-allowed"
+              )}
               disabled={isLoading}
             />
           </div>
-          <Button disabled={isLoading} className="self-end sm:self-auto">
+          <Button
+            disabled={isLoading}
+            className={cn(
+              "self-end sm:self-auto transition-all duration-200",
+              isLoading && "bg-primary/80"
+            )}
+          >
             {isLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <div className="flex items-center gap-2">
+                <Loader size="sm" />
+                <span>Processing...</span>
+              </div>
             ) : (
               "Upload your PDF"
             )}
