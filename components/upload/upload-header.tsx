@@ -3,7 +3,7 @@ import BgGradient from "../styling-component/bgGradient";
 import { Badge } from "../ui/badge";
 import { WandSparkles } from "lucide-react";
 
-const uploadHeader = () => {
+const UploadHeader = () => {
   return (
     <div className="flex flex-col items-center justify-center text-center gap-6">
       <div className="relative p-[1px] overflow-hidden rounded-full bg-gradient-to-r from-rose-200 via-rose-400 to-rose-800 animate-gradient-x group">
@@ -25,4 +25,4 @@ const uploadHeader = () => {
   );
 };
 
-export default uploadHeader;
+export default UploadHeader;

@@ -2,11 +2,13 @@
 
 import { useUploadThing } from "@/utils/uploadThing";
 import UploadFormInput from "./uploadFormInput";
+import UploadHeader from "./upload-header";
 import { z } from "zod";
 import { toast } from "sonner";
 import { generatePdfSummary, storeSummary } from "@/actions/upload-actions";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { FileText, Zap } from "lucide-react";
 
 const schema = z.object({
   file: z
@@ -161,12 +163,56 @@ const UploadForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-8 w-full max-w-2xl mx-auto">
-      <UploadFormInput
-        isLoading={isLoading}
-        ref={formRef}
-        onSubmit={handleSubmit}
-      />
+    <div className="flex flex-col gap-8 w-full max-w-3xl mx-auto">
+      <UploadHeader />
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-2">
+          <UploadFormInput
+            isLoading={isLoading}
+            ref={formRef}
+            onSubmit={handleSubmit}
+          />
+        </div>
+        <div className="space-y-6">
+          <div className="p-6 bg-rose-50 rounded-xl border border-rose-100">
+            <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <Zap className="w-5 h-5 text-rose-500" />
+              Quick Tips
+            </h3>
+            <ul className="space-y-3 text-sm text-gray-600">
+              <li className="flex items-start gap-2">
+                <span className="text-rose-500">•</span>
+                <span>Maximum file size: 20MB</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-rose-500">•</span>
+                <span>Only PDF files are supported</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-rose-500">•</span>
+                <span>Processing time varies based on file size</span>
+              </li>
+            </ul>
+          </div>
+          <div className="p-6 bg-white rounded-xl border border-gray-200">
+            <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <FileText className="w-5 h-5 text-rose-500" />
+              What to Expect
+            </h3>
+            <ul className="space-y-3 text-sm text-gray-600">
+              <li className="flex items-start gap-2">
+                <span className="text-rose-500">•</span>
+                <span>AI-powered summary generation</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-rose-500">•</span>
+                <span>Instant access to your summary</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
