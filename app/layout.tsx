@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Source_Sans_3 as FontSans } from "next/font/google";
-import { Layers2 } from "lucide-react";
+// import { Layers2 } from "lucide-react";
 import "./globals.css";
 import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/next";
 
 const fontSans = FontSans({
   variable: "--font-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({
             <Footer />
           </div>
           <Toaster />
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
