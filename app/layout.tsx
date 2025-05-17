@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Source_Sans_3 as FontSans } from "next/font/google";
+import { Layers2 } from "lucide-react";
 import "./globals.css";
 import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
@@ -16,6 +17,11 @@ export const metadata: Metadata = {
   title: "Necto - Intelligent PDF Summarization",
   description:
     "Save hours of reading time. Transform lengthy PDFs into clear, concise summaries instantly with Necto's powerful document analysis technology.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
