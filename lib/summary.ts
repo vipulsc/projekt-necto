@@ -17,3 +17,14 @@ export async function getSummaries(userId: string): Promise<Summary[]> {
 
   return getSummaries as Summary[];
 }
+
+export async function getSummary({ id }: { id: string }) {
+  try {
+    const sql = await getDbConnection();
+    const [summary] = await sql`SELECT * FROM pdf_summaries WHERE id = ${id}`;
+    return summary;
+  } catch (error) {
+    console.error("Error fetching summary:", error);
+    return null;
+  }
+}
