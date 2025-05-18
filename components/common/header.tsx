@@ -2,13 +2,7 @@
 import NavLink from "../styling-component/nav-link";
 import { Layers2, Crown, Upload, FileText } from "lucide-react";
 import { Button } from "../ui/button";
-import {
-  SignedIn,
-  SignedOut,
-  SignIn,
-  SignUpButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignIn, UserButton } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
 import Loading from "./loading";
 import { usePathname } from "next/navigation";
@@ -124,17 +118,11 @@ function Header() {
 
             <SignedOut>
               <div className="flex items-center gap-4">
-                <NavLink
-                  href={"/sign-in"}
-                  className="text-gray-600 hover:text-rose-500 transition-colors duration-200"
-                >
-                  Sign In
-                </NavLink>
                 <Button
-                  className="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg transition-all duration-200 shadow-lg hover:shadow-rose-200"
+                  className="bg-rose-500 hover:bg-rose-600 text-white hover:text-rose-50 px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-rose-200"
                   asChild
                 >
-                  <SignUpButton />
+                  <NavLink href={"/sign-in"}>Sign In</NavLink>
                 </Button>
               </div>
             </SignedOut>
@@ -175,9 +163,9 @@ function Header() {
             <SignedOut>
               <NavLink
                 href="/sign-in"
-                className="flex flex-col items-center gap-1 text-gray-600 hover:text-rose-500 transition-colors duration-200"
+                className="flex flex-col items-center gap-1 text-rose-500 hover:text-rose-600 transition-colors duration-200"
               >
-                <span className="text-xs">Sign In</span>
+                <span className="text-sm font-medium">Sign In</span>
               </NavLink>
             </SignedOut>
           </div>
